@@ -5,10 +5,8 @@ from selenium.webdriver.chrome.service import Service
 
 def openUrl():
     driver_Path = "/usr/local/chromedriver-linux64/chromedriver"
-    brave_Path = "/snap/bin/brave"
     google_Path = "/usr/bin/google-chrome"
     options = webdriver.ChromeOptions()
-#    options.binary_location = brave_Path
     options.binary_location = google_Path
 
     options.add_argument('--no-sandbox')
@@ -27,17 +25,32 @@ def openUrl():
 
 
 def connection(driver):
-    userName = driver.find_element(By.ID, "MasterContent_content_txtUsername")
-    userName.send_keys("username")
+    try:
+        userName = driver.find_element(By.ID, "MasterContent_content_txtUsername")
+        userName.send_keys("username")
+    except Exception:
+        print("Erreur lors du remplissage de l'identifiant sur la page de connection\n")
 
-    prenom_input = driver.find_element(By.ID, "MasterContent_content_txtPassword")
-    prenom_input.send_keys("password")
+    try:
+        prenom_input = driver.find_element(By.ID, "MasterContent_content_txtPassword")
+        prenom_input.send_keys("password")
+    except Exception:
+        print("Erreur lors du remplissage du mot de passe sur la page de connection\n")
 
-    login = driver.find_element(By.ID, "MasterContent_content_btnConnect")
-    login.click()
-    
-    adh = driver.find_element(By.ID, "MasterContent_menu_menuLevel_menuLevel_0_link_4")
-    adh.click()
+    try:
+        login = driver.find_element(By.ID, "MasterContent_content_btnConnect")
+        login.click()
+    except Exception:
+        print("Erreur, je n'ai pas trouvé le bouton \"Se connecter\" sur la page de connection\n")
 
-    gere = driver.find_element(By.ID, "MasterContent_menu_menuLevel_menuLevel_0_menuLevel_4_link_0")
-    gere.click()
+    try:
+        adh = driver.find_element(By.ID, "MasterContent_menu_menuLevel_menuLevel_0_link_4")
+        adh.click()
+    except Exception:
+        print("Erreur je n'ai pas trouvé le bouton \"Mes adhésions\" sur la page principale\n")
+
+    try:
+        gere = driver.find_element(By.ID, "MasterContent_menu_menuLevel_menuLevel_0_menuLevel_4_link_0")
+        gere.click()
+    except Exception:
+        print("Erreur je n'ai pas trouvé le bouton \"Gérer mes adhérents.es\" sur la page principale\n")
